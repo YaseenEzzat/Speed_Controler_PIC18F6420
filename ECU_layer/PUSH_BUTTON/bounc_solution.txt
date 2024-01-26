@@ -1,0 +1,90 @@
+/* 
+ * File:   Application.c
+ * Author: YaseenEzzat
+ *
+ * Created on October 22, 2023, 10:26 AM
+ */
+#include"application.h"
+
+void LEDs_intialization (void);
+void BUTTONSs_intialization (void);
+
+button_config_t button1 = {
+    .pin_config.PORT = portD,
+    .pin_config.PIN = GPIO_PIN0,
+    .pin_config.LOGIC = GPIO_PIN_LOW,
+    .pin_config.DIRECTOION = GPIO_PIN_INPUT,
+    .button_status = RELEASED,
+    .button_connection = BUTTON_ACTIVE_HIGH
+};
+
+pin_config_t led1 = {
+   .PORT = portC,
+   .PIN = GPIO_PIN0,
+   .LOGIC = GPIO_PIN_LOW,
+   .DIRECTOION = GPIO_PIN_OUTPUT
+};
+
+
+
+Std_ReturnType ret = E_NOT_OK;
+button_status_t button_status = RELEASED;
+button_status_t button_status1 = RELEASED;
+button_status_t button_last_status1 = RELEASED;
+led_status_t led1_status = LED_OFF;
+uint32 bounce_counter = 0;
+
+int main() {
+    LEDs_intialization();
+    BUTTONSs_intialization ();
+   
+    while (1)
+    {
+        ECU_BUTTON_read(&button1, &button_status);
+        if(button_status==PRESSED)
+            {
+                bounce_counter++;
+                if(bounce_counter>500)
+                    {
+                        button_status1=PRESSED;
+                    }        
+            }
+        else
+            {
+                bounce_counter=0;
+                button_status1=RELEASED;
+            }
+        if(button_status1!= button_last_status1)
+        {
+            button_last_status1=button_status1;
+            
+                if(button_status1==PRESSED)
+                {
+                    if(led1_status==LED_OFF)
+                        {
+                            ret = ECU_LED_turn_on(&led1);
+                            led1_status=LED_ON;     
+                        }
+                    else
+                        {
+                            ret = ECU_LED_turn_off(&led1);
+                            led1_status=LED_OFF;     
+                        }
+
+                    
+                }
+            
+                
+            }
+       
+    }
+       return (EXIT_SUCCESS);
+}
+void LEDs_intialization (void){
+    ret = ECU_LED_intialization (&led1);
+}
+void BUTTONSs_intialization (void){
+    ret = ECU_BUTTON_intialization (&button1);
+}
+
+   

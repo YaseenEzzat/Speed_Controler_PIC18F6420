@@ -1,0 +1,158 @@
+/*
+pin_config_t led1 = {
+   .PORT = portC,
+   .PIN = GPIO_PIN0,
+   .LOGIC = GPIO_PIN_LOW,
+   .DIRECTOION = GPIO_PIN_OUTPUT
+};
+
+pin_config_t led2 = {
+   .PORT = portC,
+   .PIN = GPIO_PIN1,
+   .LOGIC = GPIO_PIN_HIGH,
+   .DIRECTOION = GPIO_PIN_OUTPUT
+};
+pin_config_t led3 = {
+   .PORT = portC,
+   .PIN = GPIO_PIN2,
+   .LOGIC = GPIO_PIN_HIGH,
+   .DIRECTOION = GPIO_PIN_OUTPUT
+};
+
+pin_logic_t PINLOGIC;
+pin_directoin_t  PINDIRECTION;
+
+uint8 PORTDIRECTION;
+uint8 PORTLOGIC;
+Std_ReturnType ret = E_NOT_OK;
+ */
+Std_ReturnType ret = E_NOT_OK;
+void LEDs_intialization (void);
+
+
+
+led_config_t led1 ={portC , GPIO_PIN0 , GPIO_PIN_LOW};
+led_config_t led2 ={portC , GPIO_PIN1 , GPIO_PIN_LOW};
+led_config_t led3 ={portC , GPIO_PIN2 , GPIO_PIN_LOW};
+led_config_t led4 ={portC , GPIO_PIN3 , GPIO_PIN_LOW};
+led_config_t led5 ={portC , GPIO_PIN4 , GPIO_PIN_LOW};
+led_config_t led6 ={portC , GPIO_PIN5 , GPIO_PIN_LOW};
+led_config_t led7 ={portC , GPIO_PIN6 , GPIO_PIN_LOW};
+led_config_t led8 ={portC , GPIO_PIN7 , GPIO_PIN_LOW};
+
+led_config_t *leds_config [8]= {&led1 , &led2 , &led3 , &led4 , &led5 , &led6 , &led7 , &led8};
+uint32 led_seq [34][8] =   {{1,1,1,1,1,1,1,1}
+                           ,{0,1,1,1,1,1,1,1}
+                           ,{0,0,1,1,1,1,1,1}
+                           ,{0,0,0,1,1,1,1,1}
+                           ,{0,0,0,0,1,1,1,1}
+                           ,{0,0,0,0,0,1,1,1}
+                           ,{0,0,0,0,0,0,1,1}
+                           ,{0,0,0,0,0,0,0,1}
+                           ,{0,0,0,0,0,0,0,0}
+                           ,{0,0,0,0,0,0,0,1}
+                           ,{0,0,0,0,0,0,1,1}
+                           ,{0,0,0,0,0,1,1,1}
+                           ,{0,0,0,0,1,1,1,1}
+                           ,{0,0,0,1,1,1,1,1}
+                           ,{0,0,1,1,1,1,1,1}
+                           ,{0,1,1,1,1,1,1,1}
+                           ,{1,1,1,1,1,1,1,1}
+                           ,{0,0,0,0,0,0,0,1}
+                           ,{0,0,0,0,0,0,1,1}
+                           ,{0,0,0,0,0,1,1,1}
+                           ,{0,0,0,0,1,1,1,1}
+                           ,{0,0,0,1,1,1,1,1}
+                           ,{0,0,1,1,1,1,1,1}
+                           ,{0,1,1,1,1,1,1,1}
+                           ,{1,1,1,1,1,1,1,1}
+                           ,{0,1,1,1,1,1,1,1}
+                           ,{0,0,1,1,1,1,1,1}
+                           ,{0,0,0,1,1,1,1,1}
+                           ,{0,0,0,0,1,1,1,1}
+                           ,{0,0,0,0,0,1,1,1}
+                           ,{0,0,0,0,0,0,1,1}
+                           ,{0,0,0,0,0,0,0,1}
+                           ,{0,0,0,0,0,0,0,0}};
+
+uint8 counter1 = 0;
+uint8 counter2 = 0;
+int main() {
+   
+    /* 
+    ret = GPIO_PIN_directoin_intialization (&led2);
+    
+    ret = GPIO_PIN_read_logic (&led2 ,&PINLOGIC );
+    __delay_ms(500);
+     ret = GPIO_PIN_write_logic (&led2 ,GPIO_PIN_HIGH );
+     ret = GPIO_PIN_read_logic (&led2 ,&PINLOGIC );
+    __delay_ms(500);
+     ret = GPIO_PIN_write_logic (&led2 ,GPIO_PIN_LOW );
+      ret = GPIO_PIN_read_logic (&led2 ,&PINLOGIC );
+       __delay_ms(500);
+       ret = GPIO_PIN_toggle (&led2);
+
+    
+    ret = GPIO_PORT_directoin_intialization (portC ,0x00 );
+    ret = GPIO_PORT_read_logic(portC ,&PORTLOGIC ) ;
+    ret = GPIO_PIN_read_logic (&led2 ,&PINLOGIC );
+    ret = GPIO_PORT_write_logic(portC , 0x0f);
+    ret = GPIO_PIN_get_directoin_status (&led2 ,&PINDIRECTION );
+    ret = GPIO_PIN_read_logic (&led2 ,&PINLOGIC );
+    __delay_ms(500);
+    ret = GPIO_PORT_directoin_intialization (portC ,0xAA );
+    ret = GPIO_PIN_get_directoin_status (&led2 ,&PINDIRECTION );
+    ret = GPIO_PIN_read_logic (&led2 ,&PINLOGIC );
+    ret = GPIO_PORT_get_directoin_status (portC ,&PORTDIRECTION );
+    ret = GPIO_PORT_read_logic(portC ,&PORTLOGIC ) ;
+    
+    ret = GPIO_PORT_toggle(portC);
+ 
+    
+     ret = GPIO_PIN_directoin_intialization (&led2);
+     
+     
+     while(1)
+     {
+     ret = GPIO_PIN_write_logic (&led2 ,GPIO_PIN_HIGH );
+     __delay_ms(500);
+
+     }
+     */
+    /*
+    LEDs_intialization();
+     uint32 status = 0;
+    for (counter1= 0 ; counter1<34 ; counter1++){
+        for (counter2=0 ; counter2<8 ; counter2++)
+        {
+            led_config_t leds = *leds_config [counter2];
+            status = led_seq [counter1][counter2];
+            if (status == 0)
+            {
+                ECU_LED_turn_off (&leds);
+            }
+            else if (status == 1)
+            {
+                ECU_LED_turn_on (&leds);
+            }
+            else{};
+
+
+        }
+        __delay_ms(100);
+    }
+     */
+
+       return (EXIT_SUCCESS);
+}
+
+void LEDs_intialization (void){
+    ret = ECU_LED_intialization (&led1);
+    ret = ECU_LED_intialization (&led2);
+    ret = ECU_LED_intialization (&led3);
+    ret = ECU_LED_intialization (&led4);
+    ret = ECU_LED_intialization (&led5);
+    ret = ECU_LED_intialization (&led6);
+    ret = ECU_LED_intialization (&led7);
+    ret = ECU_LED_intialization (&led8);
+}

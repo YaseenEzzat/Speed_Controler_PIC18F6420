@@ -1,0 +1,53 @@
+/* 
+ * File:   Application.c
+ * Author: YaseenEzzat
+ *
+ * Created on October 22, 2023, 10:26 AM
+ */
+#include"application.h"
+
+void RELAYs_intialization (void);
+
+
+
+relay_config_t relay1 = {
+   .port = portC,
+   .pin_num = GPIO_PIN0,
+   .logic = GPIO_PIN_LOW,
+};
+relay_config_t relay2 = {
+   .port = portC,
+   .pin_num = GPIO_PIN1,
+   .logic = GPIO_PIN_LOW,
+};
+
+Std_ReturnType ret = E_NOT_OK;
+
+
+int main() {
+    RELAYs_intialization();
+   
+    while (1)
+    {
+        ret = ECU_RELAY_turn_on(&relay1);
+        ret = ECU_RELAY_turn_off(&relay2);
+        __delay_ms(2000);
+        ret = ECU_RELAY_turn_off(&relay1);
+        ret = ECU_RELAY_turn_on(&relay2);
+        __delay_ms(2000);
+
+       return (EXIT_SUCCESS);
+    }
+}
+
+    
+    
+    
+void RELAYs_intialization (void){
+    ret = ECU_RELAY_intialization (&relay1);
+    ret = ECU_RELAY_intialization (&relay2);
+}
+
+
+
+   

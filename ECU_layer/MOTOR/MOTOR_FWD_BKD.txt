@@ -1,0 +1,64 @@
+/* 
+ * File:   Application.c
+ * Author: YaseenEzzat
+ *
+ * Created on October 22, 2023, 10:26 AM
+ */
+#include"application.h"
+
+void MOTORs_intialization (void);
+
+
+
+motor_pins_config_t motor1 = {
+    .FWD_PIN.port = portC,
+    .FWD_PIN.pin_num = GPIO_PIN0,
+    .FWD_PIN.logic = GPIO_PIN_LOW,
+    
+    .BKD_PIN.port =portC,
+    .BKD_PIN.pin_num = GPIO_PIN1,
+    .BKD_PIN.logic = GPIO_PIN_LOW,
+};
+motor_pins_config_t motor2 = {
+    .FWD_PIN.port = portC,
+    .FWD_PIN.pin_num = GPIO_PIN2,
+    .FWD_PIN.logic = GPIO_PIN_LOW,
+    
+    .BKD_PIN.port =portC,
+    .BKD_PIN.pin_num = GPIO_PIN3,
+    .BKD_PIN.logic = GPIO_PIN_LOW,
+};
+
+Std_ReturnType ret = E_NOT_OK;
+
+
+int main() {
+    MOTORs_intialization();
+   
+    while (1)
+    {
+        ret =ECU_MOTOR_turn_forward(&motor1);
+        ret =ECU_MOTOR_turn_forward(&motor2);
+        __delay_ms(1000);
+        ret =ECU_RELAY_turn_STOP(&motor1);
+        ret =ECU_RELAY_turn_STOP(&motor2);
+         __delay_ms(1000);
+        ret =ECU_RELAY_turn_backword(&motor1);
+        ret =ECU_RELAY_turn_backword(&motor2);
+         __delay_ms(1000);
+         
+       return (EXIT_SUCCESS);
+    }
+}
+
+    
+    
+    
+void MOTORs_intialization (void){
+    ret = ECU_MOTOR_intialization (&motor1);
+    ret = ECU_MOTOR_intialization (&motor2);
+}
+
+
+
+   
